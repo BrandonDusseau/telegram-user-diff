@@ -13,9 +13,10 @@ except FileNotFoundError:
     print("Config file not found")
     exit(1)
 
+
 def get_members(group):
     offset = 0
-    limit = 100
+    limit = 500
     all_participants = {}
 
     while True:
@@ -29,6 +30,7 @@ def get_members(group):
         offset += len(participants.users)
 
     return all_participants
+
 
 def build_name(user):
     if user is None:
