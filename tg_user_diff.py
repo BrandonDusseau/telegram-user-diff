@@ -32,14 +32,17 @@ def get_members(group):
     return all_participants
 
 
-def build_name(user):
+def build_name(user, userid):
     if user is None:
-        return "UNKNOWN USER!"
-    name = user.first_name
+        return "[Unknown user] [" + str(userid) + "]"
+    if user.deleted:
+        return "[Deleted user] [" + str(userid) + "]"
+    name = user.first_name if user.first_name is not None else ""
     if user.last_name is not None:
         name = name + " " + user.last_name
     if user.username is not None:
         name = name + " (@" + user.username + ")"
+    name = name + " [" + str(userid) + "]"
     return name
 
 
@@ -56,4 +59,4 @@ users_not_in_main = set(sec_members.keys()) - set(main_members.keys())
 
 print("Users not in main:")
 for userid in users_not_in_main:
-    print("   " + build_name(sec_members[userid]))
+    print("   " + build_name(sec_members[userid], userid))
